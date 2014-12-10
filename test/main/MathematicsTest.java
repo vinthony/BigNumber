@@ -32,8 +32,8 @@ public class MathematicsTest {
 
     @Test
     public void testMul() throws Exception {
-        String str1 = "200";
-        String str2 = "1";
+        String str1 = "1212212121";
+        String str2 = "100";
         Mathematics instance = new Mathematics();
         System.out.println(instance.Mul(str1, str2));
     }

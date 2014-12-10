@@ -105,7 +105,7 @@ public class Mathematics {
         if((!isNum(s1))||(!isNum(s2))) return "error";
         String ns1 = legalify(s1);
         String ns2 = legalify(s2);
-        String prefix = (isNegative(ns1)&&isNegative(ns2))||(!isNegative(ns1)&&!isNegative(ns2)) ? "" : "-";
+        String prefix = (isNegative(ns1)&&!isNegative(ns2))||(!isNegative(ns1)&&isNegative(ns2)) ? "-":"";
         String n1 = removeSign(ns1);
         String n2 = removeSign(ns2);
         String finalStr = "";
@@ -115,19 +115,17 @@ public class Mathematics {
 //        log(n1);
 //        log(n2);
 //        转换成一位数乘法 取集合
-        for (int i = n1.length()-1; i >= 0 ;i--){
+        for (int i = n1.length()-1; i >= 0 ;i--){//200
             String str = "";
-            for (int j =n2.length()-1 ;j >= 0;j--){
-//                log(n2.charAt(j-1));
-//                log(n1.charAt(i-1));
+            for (int j =n2.length()-1 ;j >= 0;j--){//10
                 temp = getInt(n2.charAt(j))*getInt(n1.charAt(i))+m;
                  m = temp/10;//进位
                  n = temp%10;//本位
-                str = n + str;
+                str = Integer.toString(n) + str;
             }
-            finalStr = Add(str,finalStr);
+            str = str +produce("0",n1.length()-1-i);
+            finalStr = Add(legalify(str),legalify(finalStr));
         }
-        log("f"+finalStr);
 
         return prefix+finalStr;
     }
@@ -176,7 +174,7 @@ public class Mathematics {
         return zero;
     }
     private Boolean isNegative(String s){
-        return s.matches("[-]");
+        return s.matches("[-][0-9]+");
     }
     private String removeSign(String s){
         for (int i = 0;i<s.length();i++){
@@ -215,5 +213,14 @@ public class Mathematics {
     }
     private String min(String s1,String s2){
         return max(s1,s2).equals(s1) ? s2 : s1;
+    }
+    private String produce(String o,int num){
+        String str = "" ;
+        while(num>0){
+            str += o;
+            num--;
+        }
+        return str;
+
     }
 }
