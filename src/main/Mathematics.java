@@ -84,17 +84,20 @@ public class Mathematics {
             int temp = getInt(bigger2.charAt(n-1)) - getInt(smaller.charAt(n-1))-borrowed;
             if(temp<0){//如果不够减
                 num = temp + 10;
-                borrowed++;
+                borrowed=1;
             }else{
                 num = temp;
-                borrowed = 0;
             }
             str = num+str;
             n--;
         }
-
-        if(borrowed!=0)
-            return legalify(prefix+Sub(prev,Integer.toString(borrowed))+str);
+        //修正prev 当prev为个位数时，直接得出结果
+        if(borrowed!=0&&prev.length()>0){
+            if(prev.length() == 1)
+                return legalify(prefix+(Integer.parseInt(prev)-borrowed)+str);
+            else
+                return legalify(prefix+Sub(prev,Integer.toString(borrowed))+str);
+        }
         else
             return legalify(prefix+str);
     }
@@ -112,8 +115,6 @@ public class Mathematics {
         int temp;
         int m = 0;
         int n;
-//        log(n1);
-//        log(n2);
 //        转换成一位数乘法 取集合
         for (int i = n1.length()-1; i >= 0 ;i--){//200
             String str = "";
@@ -133,7 +134,45 @@ public class Mathematics {
     //除法运算
     public  String Div(String s1, String s2)
     {
-        return "2";
+        if(s2.equals("0")) return "error";//除数不能为0
+        if((!isNum(s1))||(!isNum(s2))) return "error";
+        String ns1 = legalify(s1);
+        String ns2 = legalify(s2);
+        String prefix = (isNegative(ns1)&&!isNegative(ns2))||(!isNegative(ns1)&&isNegative(ns2)) ? "-":"";
+        String n1 = removeSign(ns1);
+        String n2 = removeSign(ns2);
+        String re = "";
+        String t = "";
+        int h = 0;
+        t =  n1.substring(h,h+n2.length());
+        while(h<n1.length()){
+            if(max(t,n2).equals(t)){
+                //n1>n2
+                int k = 0;
+                while(max(t,n2).equals(t)){//n1 > n2
+                    t = Sub(t,n2);
+                    k++;
+                }
+                re += k;
+                try {
+                    t = t + n1.substring(h+n2.length(),h+n2.length()+1);
+                }catch (Exception e){
+                    t = t + "0";
+                    break;
+                }
+                //迭代
+            }else{
+               re += "0";
+                try {
+                    t = t + n1.substring(h+n2.length(),h+n2.length()+1);
+                }catch (Exception e){
+                    t = t + "0";
+                    break;
+                }
+           }
+           h++;
+        }
+        return prefix+legalify(re);
     }
 
     /*
@@ -173,6 +212,14 @@ public class Mathematics {
         }
         return zero;
     }
+    private String divLegal(String s){
+        for(int i = s.length()-1 ; i >= 0;i--){
+            if(!String.valueOf(s.charAt(i)).equals(zero)){
+                return s.substring(0,i);
+            }
+        }
+        return zero;
+    }
     private Boolean isNegative(String s){
         return s.matches("[-][0-9]+");
     }
@@ -204,6 +251,10 @@ public class Mathematics {
         System.out.println(c);
     }
     private String max(String s1,String s2){
+        s1 = legalify(s1);
+        s2 = legalify(s2);
+        if(isNegative(s1)&&!isNegative(s2)) return s2;
+        if(isNegative(s2)&&!isNegative(s1)) return s1;
        if(s1.length() != s2.length()) return s1.length()>s2.length()? s1 : s2;
        for (int i = 0; i<s1.length();i++){
            if(getInt(s1.charAt(i))-getInt(s2.charAt(i))!=0)
@@ -223,4 +274,5 @@ public class Mathematics {
         return str;
 
     }
+
 }

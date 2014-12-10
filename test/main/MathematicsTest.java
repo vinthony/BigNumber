@@ -23,23 +23,26 @@ public class MathematicsTest {
 
     @Test
     public void testSub() throws Exception {
-//        String str1 = "200";
-//        String str2 = "201";
+        String str1 = "100";
+        String str2 = "23";
 
-//        Mathematics instance = new Mathematics();
-//        System.out.println(instance.Sub(str1, str2));
+        Mathematics instance = new Mathematics();
+        System.out.println(instance.Sub(str1, str2));
     }
 
     @Test
     public void testMul() throws Exception {
-        String str1 = "1212212121";
-        String str2 = "100";
-        Mathematics instance = new Mathematics();
-        System.out.println(instance.Mul(str1, str2));
+        String str1 = "100";
+        String str2 = "2";
+       // Mathematics instance = new Mathematics();
+       // System.out.println(instance.Mul(str1, str2));
     }
 
     @Test
     public void testDiv() throws Exception {
-
+        String str1 = "100";
+        String str2 = "23";
+        Mathematics instance = new Mathematics();
+        System.out.println(instance.Div(str1, str2));
     }
 }
