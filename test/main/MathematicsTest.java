@@ -1,5 +1,6 @@
 package main;
 
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,37 +13,29 @@ public class MathematicsTest {
 
     @Test
     public void testAdd() throws Exception {
-        String str1 = "1";
-        String str2 = "2";
 //        1111111111111 + 1
 //        111111111111 + 9
 //        111111111+1111111
-//        Mathematics instance = new Mathematics();
-//        System.out.println(instance.Add(str1,str2));
+        Mathematics instance = new Mathematics();
+        assertEquals(instance.Add("1","2"),"3");
+        assertEquals(instance.Add("10000","1"),"10001");
     }
 
     @Test
     public void testSub() throws Exception {
-        String str1 = "100";
-        String str2 = "23";
-
         Mathematics instance = new Mathematics();
-        System.out.println(instance.Sub(str1, str2));
+        assertEquals(instance.Sub("1","2"),"-1");
+        assertEquals(instance.Sub("10000","1"),"9999");
     }
 
     @Test
     public void testMul() throws Exception {
-        String str1 = "100";
-        String str2 = "2";
        // Mathematics instance = new Mathematics();
        // System.out.println(instance.Mul(str1, str2));
     }
 
     @Test
     public void testDiv() throws Exception {
-        String str1 = "100";
-        String str2 = "23";
         Mathematics instance = new Mathematics();
-        System.out.println(instance.Div(str1, str2));
     }
 }
