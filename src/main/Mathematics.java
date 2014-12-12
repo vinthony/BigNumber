@@ -31,10 +31,12 @@ public class Mathematics {
         int y = 0;//剩余
 //      如果两个负数，去掉符号之后相加
         if(isNegative(ns1)&&isNegative(ns2))
-            Add(removeSign(ns1),removeSign(ns2));
+           return "-"+Add(removeSign(ns1),removeSign(ns2));
 //        如果存在一个负数，当减法处理
-        if(isNegative(ns1)||isNegative(ns2))
-            Sub(ns1,ns2);
+        if(isNegative(ns1)||isNegative(ns2)){
+            if(isNegative(ns1)) return Sub(ns2,removeSign(ns1));
+            if(isNegative(ns2)) return Sub(ns1,removeSign(ns2));
+        }
 
         String prev = longer.substring(0,longer.length()-shorter.length());
         String longer2 = longer.substring(prev.length());
@@ -69,7 +71,6 @@ public class Mathematics {
         if(isNegative(ns2)) return Add(s1,removeSign(s2));
 //       -a-(-b) = b-a = -(a-b)
         if(isNegative(ns1)&&isNegative(ns2)) return Sub(s2, s1);
-
 //        处理 a-b a>b ? a< b
         String bigger = max(ns1,ns2);
         String smaller = min(ns1, ns2);
@@ -99,7 +100,7 @@ public class Mathematics {
                 return legalify(prefix+Sub(prev,Integer.toString(borrowed))+str);
         }
         else
-            return legalify(prefix+str);
+            return legalify(prefix+prev+str);
     }
 
     //乘法运算
@@ -111,6 +112,7 @@ public class Mathematics {
         String prefix = (isNegative(ns1)&&!isNegative(ns2))||(!isNegative(ns1)&&isNegative(ns2)) ? "-":"";
         String n1 = removeSign(ns1);
         String n2 = removeSign(ns2);
+        if( n1.equals("0") || n2.equals("0")) return "0";
         String finalStr = "";
         int temp;
         int m = 0;
@@ -120,9 +122,14 @@ public class Mathematics {
             String str = "";
             for (int j =n2.length()-1 ;j >= 0;j--){//10
                 temp = getInt(n2.charAt(j))*getInt(n1.charAt(i))+m;
+                log(temp);
                  m = temp/10;//进位
                  n = temp%10;//本位
-                str = Integer.toString(n) + str;
+                //如果是单个
+                if(n1.length()==1)
+                 str = m + Integer.toString(n) + str;
+                else
+                 str = Integer.toString(n) +str;
             }
             str = str +produce("0",n1.length()-1-i);
             finalStr = Add(legalify(str),legalify(finalStr));
