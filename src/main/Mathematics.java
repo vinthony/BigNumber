@@ -118,16 +118,15 @@ public class Mathematics {
         int m = 0;
         int n;
 //        转换成一位数乘法 取集合
-        for (int i = n1.length()-1; i >= 0 ;i--){//200
+        for (int i = n1.length()-1; i >= 0 ;i--){//3
             String str = "";
-            for (int j =n2.length()-1 ;j >= 0;j--){//10
+            for (int j =n2.length()-1 ;j >= 0;j--){//300
                 temp = getInt(n2.charAt(j))*getInt(n1.charAt(i))+m;
-                log(temp);
                  m = temp/10;//进位
                  n = temp%10;//本位
-                //如果是单个
-                if(n1.length()==1)
-                 str = m + Integer.toString(n) + str;
+                //如果是单个乘数直接进行操作
+                if(n2.length()==1)
+                 str = m + Integer.toString(n);
                 else
                  str = Integer.toString(n) +str;
             }
@@ -151,7 +150,12 @@ public class Mathematics {
         String re = "";
         String t = "";
         int h = 0;
-        t =  n1.substring(h,h+n2.length());
+        if(s2.equals("1")) return s1;
+        try{
+            t = n1.substring(h,h+n2.length());
+        }catch (Exception e){
+            return "0";
+        }
         while(h<n1.length()){
             if(max(t,n2).equals(t)){
                 //n1>n2
@@ -272,6 +276,7 @@ public class Mathematics {
     private String min(String s1,String s2){
         return max(s1,s2).equals(s1) ? s2 : s1;
     }
+//    产生num个o
     private String produce(String o,int num){
         String str = "" ;
         while(num>0){
